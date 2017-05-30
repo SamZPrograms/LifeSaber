@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     var deflect:AVAudioPlayer = AVAudioPlayer()
     var hit:AVAudioPlayer = AVAudioPlayer()
     var swing1:AVAudioPlayer = AVAudioPlayer()
-    var swing2:AVAudioPlayer = AVAudioPlayer()
+    //var swing2:AVAudioPlayer = AVAudioPlayer()
     var switchListen:UISwitch = UISwitch()
     
     var glowBool = true
@@ -61,7 +61,7 @@ class ViewController: UIViewController {
     @IBAction func swingFast(_ sender: Any) {
         deflect.setVolume(0.0, fadeDuration: 0.3)
         //hit.setVolume(0.0, fadeDuration: 0.3)
-        swing2.setVolume(0.0, fadeDuration: 0.1)
+        //swing2.setVolume(0.0, fadeDuration: 0.1)
         
         swing1.setVolume(5.0, fadeDuration: 0.0)
         swing1.play()
@@ -79,7 +79,7 @@ class ViewController: UIViewController {
     @IBAction func hitBtn(_ sender: Any) {
         deflect.setVolume(0.0, fadeDuration: 0.3)
         swing1.setVolume(0.0, fadeDuration: 0.3)
-        swing2.setVolume(0.0, fadeDuration: 0.3)
+        //swing2.setVolume(0.0, fadeDuration: 0.3)
         AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
         
         hit.setVolume(1.0, fadeDuration: 0.0)

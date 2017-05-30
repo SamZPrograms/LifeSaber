@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     var timer: Timer!
     var glowTimer: Timer!
     
-    var sensativity = 1.6
+    var sensativity = 1.3
     
     var turnOn:AVAudioPlayer = AVAudioPlayer()
     var turnOff:AVAudioPlayer = AVAudioPlayer()
@@ -59,7 +59,7 @@ class ViewController: UIViewController {
 //    }
     
     @IBAction func swingFast(_ sender: Any) {
-        deflect.setVolume(0.0, fadeDuration: 0.3)
+        //deflect.setVolume(0.0, fadeDuration: 0.3)
         //hit.setVolume(0.0, fadeDuration: 0.3)
         //swing2.setVolume(0.0, fadeDuration: 0.1)
         
@@ -69,7 +69,7 @@ class ViewController: UIViewController {
     
     @IBAction func deflectBtn(_ sender: Any) {
         //hit.setVolume(0.0, fadeDuration: 0.3)
-        swing1.setVolume(0.0, fadeDuration: 0.3)
+        //swing1.setVolume(0.0, fadeDuration: 0.3)
         //swing2.setVolume(0.0, fadeDuration: 0.3)
         
         deflect.setVolume(1.0, fadeDuration: 0.0)
@@ -132,11 +132,11 @@ class ViewController: UIViewController {
         if isSaberOn {
             if let accelerometerData = motionManager.accelerometerData {
                 switch sqrt(pow(accelerometerData.acceleration.x, 2.0) + pow(accelerometerData.acceleration.y, 2.0) + pow(accelerometerData.acceleration.z, 2.0)) {
-                case (sensativity * 1.7)..<(sensativity * 2.0):
+                case (sensativity * 1.0)..<(sensativity * 2.2):
                     self.swingFast(swing1)
-                case (sensativity * 2.3)..<(sensativity * 2.5):
+                case (sensativity * 2.4)..<(sensativity * 2.9):
                     self.deflectBtn(deflect)
-                case (sensativity * 2.8)..<100:
+                case (sensativity * 3.5)..<100:
                     self.hitBtn(hit)
                 default:
                     print("The Force comes from within...")
@@ -144,12 +144,12 @@ class ViewController: UIViewController {
             }
             if let gyroData = motionManager.gyroData {
                 switch sqrt(pow(gyroData.rotationRate.x, 2.0) + pow(gyroData.rotationRate.z, 2.0)) {
-                case (sensativity * 3.5)..<(sensativity * 6.0):
+                case (sensativity * 2.0)..<(sensativity * 7.0):
                     self.swingFast(swing1)
-                case (sensativity * 6.0)..<(sensativity * 10.0):
+                case (sensativity * 8.0)..<(sensativity * 10.0):
                     self.deflectBtn(deflect)
-                case (sensativity * 12.0)..<100:
-                    self.hitBtn(hit)
+//                case (sensativity * 11.0)..<100:
+//                    self.hitBtn(hit)
                 default:
                     print("The Force comes from within...")
                 }

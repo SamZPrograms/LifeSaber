@@ -18,16 +18,15 @@ class ViewController: UIViewController {
     let saber2 = UIImage(named: "saber2")
     let handle = UIImage(named: "handle")
 
-    
     var timer: Timer!
     var glowTimer: Timer!
     
-    var sensativity = 1.5
+    var sensativity = 1.6
     
     var turnOn:AVAudioPlayer = AVAudioPlayer()
     var turnOff:AVAudioPlayer = AVAudioPlayer()
+    var deflect:AVAudioPlayer = AVAudioPlayer()
     var hit:AVAudioPlayer = AVAudioPlayer()
-    var hit2:AVAudioPlayer = AVAudioPlayer()
     var swing1:AVAudioPlayer = AVAudioPlayer()
     var swing2:AVAudioPlayer = AVAudioPlayer()
     var switchListen:UISwitch = UISwitch()
@@ -50,51 +49,43 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func hitButt(_ sender: Any) {
-        //hit2.setVolume(0.0, fadeDuration: 0.3)
-        swing1.setVolume(0.0, fadeDuration: 0.3)
-        swing2.setVolume(0.0, fadeDuration: 0.3)
-        //AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
-        
-        hit.setVolume(1.0, fadeDuration: 0.0)
-        hit.play()
-    }
-    @IBAction func hitButt2(_ sender: Any) {
-        hit.setVolume(0.0, fadeDuration: 0.3)
-        swing1.setVolume(0.0, fadeDuration: 0.3)
-        swing2.setVolume(0.0, fadeDuration: 0.3)
-        AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
-        
-        hit2.setVolume(1.0, fadeDuration: 0.0)
-        hit2.play()
-    }
+//    @IBAction func swingSlow(_ sender: Any) {
+//        deflect.setVolume(0.0, fadeDuration: 0.3)
+//        //hit.setVolume(0.0, fadeDuration: 0.3)
+//        swing1.setVolume(0.0, fadeDuration: 0.1)
+//
+//        swing2.setVolume(3.0, fadeDuration: 0.0)
+//        swing2.play()
+//    }
     
     @IBAction func swingFast(_ sender: Any) {
-        hit.setVolume(0.0, fadeDuration: 0.3)
-        //hit2.setVolume(0.0, fadeDuration: 0.3)
+        deflect.setVolume(0.0, fadeDuration: 0.3)
+        //hit.setVolume(0.0, fadeDuration: 0.3)
         swing2.setVolume(0.0, fadeDuration: 0.1)
         
         swing1.setVolume(5.0, fadeDuration: 0.0)
         swing1.play()
     }
     
-    @IBAction func swingSlow(_ sender: Any) {
-        hit.setVolume(0.0, fadeDuration: 0.3)
-        //hit2.setVolume(0.0, fadeDuration: 0.3)
-        swing1.setVolume(0.0, fadeDuration: 0.1)
+    @IBAction func deflectBtn(_ sender: Any) {
+        //hit.setVolume(0.0, fadeDuration: 0.3)
+        swing1.setVolume(0.0, fadeDuration: 0.3)
+        //swing2.setVolume(0.0, fadeDuration: 0.3)
         
-        swing2.setVolume(3.0, fadeDuration: 0.0)
-        swing2.play()
+        deflect.setVolume(1.0, fadeDuration: 0.0)
+        deflect.play()
     }
     
-    @IBOutlet weak var steps: UILabel!
-    @IBOutlet weak var stepSens: UIStepper!
-    @IBAction func stepSens(_ sender: Any) {
-        //self.sensativity += (stepSens.value)
-        print(stepSens.stepValue)
+    @IBAction func hitBtn(_ sender: Any) {
+        deflect.setVolume(0.0, fadeDuration: 0.3)
+        swing1.setVolume(0.0, fadeDuration: 0.3)
+        swing2.setVolume(0.0, fadeDuration: 0.3)
+        AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
+        
+        hit.setVolume(1.0, fadeDuration: 0.0)
+        hit.play()
     }
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -106,12 +97,13 @@ class ViewController: UIViewController {
         
         turnOn = self.getAudio(fileName: "turnOn", fileExt: "mp3")
         turnOff = self.getAudio(fileName: "turnOff", fileExt: "wav")
+        deflect = self.getAudio(fileName: "deflect", fileExt: "wav")
         hit = self.getAudio(fileName: "hit", fileExt: "wav")
-        hit2 = self.getAudio(fileName: "hit2", fileExt: "wav")
         swing1 = self.getAudio(fileName: "swing1", fileExt: "wav")
-        swing2 = self.getAudio(fileName: "swing2", fileExt: "wav")
+        //swing2 = self.getAudio(fileName: "swing2", fileExt: "wav")
     }
     
+    // Gets a file name & extension and returns its AVAudioPlayer
     func getAudio(fileName: String, fileExt: String) -> AVAudioPlayer {
         do {
             let audioPath = Bundle.main.path(forResource: fileName, ofType: fileExt)
@@ -140,30 +132,26 @@ class ViewController: UIViewController {
         if isSaberOn {
             if let accelerometerData = motionManager.accelerometerData {
                 switch sqrt(pow(accelerometerData.acceleration.x, 2.0) + pow(accelerometerData.acceleration.y, 2.0) + pow(accelerometerData.acceleration.z, 2.0)) {
-                case (sensativity * 1.05)..<(sensativity * 1.2):
-                    self.swingSlow(swing2)
-                case (sensativity * 1.7)..<(sensativity * 2.2):
+                case (sensativity * 1.7)..<(sensativity * 2.0):
                     self.swingFast(swing1)
-                case (sensativity * 2.2)..<(sensativity * 2.5):
-                    self.hitButt(hit)
-                case (sensativity * 2.5)..<100:
-                    self.hitButt2(hit2)
+                case (sensativity * 2.3)..<(sensativity * 2.5):
+                    self.deflectBtn(deflect)
+                case (sensativity * 2.8)..<100:
+                    self.hitBtn(hit)
                 default:
-                    print("Error")
+                    print("The Force comes from within...")
                 }
             }
             if let gyroData = motionManager.gyroData {
                 switch sqrt(pow(gyroData.rotationRate.x, 2.0) + pow(gyroData.rotationRate.z, 2.0)) {
-                case (sensativity * 1.5)..<(sensativity * 1.7):
-                    self.swingSlow(swing2)
-                case (sensativity * 3.5)..<(sensativity * 8.0):
+                case (sensativity * 3.5)..<(sensativity * 6.0):
                     self.swingFast(swing1)
-                case (sensativity * 8.0)..<(sensativity * 12.0):
-                    self.hitButt(hit)
+                case (sensativity * 6.0)..<(sensativity * 10.0):
+                    self.deflectBtn(deflect)
                 case (sensativity * 12.0)..<100:
-                    self.hitButt2(hit2)
+                    self.hitBtn(hit)
                 default:
-                    print("Error")
+                    print("The Force comes from within...")
                 }
             }
         }

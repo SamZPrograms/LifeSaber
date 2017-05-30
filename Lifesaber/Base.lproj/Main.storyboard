@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -32,11 +33,30 @@
                                     <action selector="switchSaber:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OK4-LC-m2w"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Ipj-ck-KP0">
+                                <rect key="frame" x="20" y="24" width="94" height="49.5"/>
+                                <subviews>
+                                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="7aU-u0-1ne">
+                                        <rect key="frame" x="0.0" y="0.0" width="94" height="29"/>
+                                        <connections>
+                                            <action selector="stepSens:" destination="BYZ-38-t0r" eventType="valueChanged" id="eo1-hW-cOy"/>
+                                        </connections>
+                                    </stepper>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xIe-iA-zst">
+                                        <rect key="frame" x="0.0" y="29" width="42" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="lDC-16-Lfb" secondAttribute="bottom" constant="8" id="0fu-Ra-pu8"/>
+                            <constraint firstItem="Ipj-ck-KP0" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="4" id="1hW-U5-g0b"/>
                             <constraint firstItem="lDC-16-Lfb" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="24" id="BbD-JM-e7H"/>
+                            <constraint firstItem="Ipj-ck-KP0" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="4" id="TOL-du-7Ho"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="lDC-16-Lfb" secondAttribute="bottom" constant="8" id="erF-5z-x1c"/>
                             <constraint firstItem="lDC-16-Lfb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qQa-Ta-sYp"/>
                         </constraints>
@@ -45,6 +65,8 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="saberIV" destination="lDC-16-Lfb" id="KNs-pM-OSO"/>
+                        <outlet property="stepSens" destination="7aU-u0-1ne" id="24b-CF-qtM"/>
+                        <outlet property="steps" destination="xIe-iA-zst" id="mLG-9f-3yR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

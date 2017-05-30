@@ -9,6 +9,7 @@
 import UIKit
 import CoreMotion
 import AVFoundation
+import AudioToolbox
 
 class ViewController: UIViewController {
     
@@ -20,7 +21,8 @@ class ViewController: UIViewController {
     
     var timer: Timer!
     var glowTimer: Timer!
-    var sensativity = 1.0
+    
+    var sensativity = 1.5
     
     var turnOn:AVAudioPlayer = AVAudioPlayer()
     var turnOff:AVAudioPlayer = AVAudioPlayer()
@@ -29,6 +31,7 @@ class ViewController: UIViewController {
     var swing1:AVAudioPlayer = AVAudioPlayer()
     var swing2:AVAudioPlayer = AVAudioPlayer()
     var switchListen:UISwitch = UISwitch()
+    
     var glowBool = true
     var isSaberOn = false
     
@@ -48,9 +51,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func hitButt(_ sender: Any) {
-        hit2.setVolume(0.0, fadeDuration: 0.3)
+        //hit2.setVolume(0.0, fadeDuration: 0.3)
         swing1.setVolume(0.0, fadeDuration: 0.3)
         swing2.setVolume(0.0, fadeDuration: 0.3)
+        //AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
         
         hit.setVolume(1.0, fadeDuration: 0.0)
         hit.play()
@@ -59,6 +63,7 @@ class ViewController: UIViewController {
         hit.setVolume(0.0, fadeDuration: 0.3)
         swing1.setVolume(0.0, fadeDuration: 0.3)
         swing2.setVolume(0.0, fadeDuration: 0.3)
+        AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
         
         hit2.setVolume(1.0, fadeDuration: 0.0)
         hit2.play()
@@ -66,7 +71,7 @@ class ViewController: UIViewController {
     
     @IBAction func swingFast(_ sender: Any) {
         hit.setVolume(0.0, fadeDuration: 0.3)
-        hit2.setVolume(0.0, fadeDuration: 0.3)
+        //hit2.setVolume(0.0, fadeDuration: 0.3)
         swing2.setVolume(0.0, fadeDuration: 0.1)
         
         swing1.setVolume(5.0, fadeDuration: 0.0)
@@ -75,12 +80,20 @@ class ViewController: UIViewController {
     
     @IBAction func swingSlow(_ sender: Any) {
         hit.setVolume(0.0, fadeDuration: 0.3)
-        hit2.setVolume(0.0, fadeDuration: 0.3)
+        //hit2.setVolume(0.0, fadeDuration: 0.3)
         swing1.setVolume(0.0, fadeDuration: 0.1)
         
         swing2.setVolume(3.0, fadeDuration: 0.0)
         swing2.play()
     }
+    
+    @IBOutlet weak var steps: UILabel!
+    @IBOutlet weak var stepSens: UIStepper!
+    @IBAction func stepSens(_ sender: Any) {
+        //self.sensativity += (stepSens.value)
+        print(stepSens.stepValue)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
